@@ -134,6 +134,37 @@ final class DataNodeRequest extends AbstractTransportRequest implements IndicesR
         );
     }
 
+    /**
+     * Backward-compatible constructor for callers that do not control retained search context behavior.
+     */
+    DataNodeRequest(
+        String sessionId,
+        Configuration configuration,
+        String clusterAlias,
+        List<Shard> shards,
+        Map<Index, AliasFilter> aliasFilters,
+        PhysicalPlan plan,
+        String[] indices,
+        IndicesOptions indicesOptions,
+        boolean runNodeLevelReduction,
+        boolean reductionLateMaterialization
+    ) {
+        this(
+            sessionId,
+            configuration,
+            clusterAlias,
+            shards,
+            aliasFilters,
+            plan,
+            indices,
+            indicesOptions,
+            runNodeLevelReduction,
+            reductionLateMaterialization,
+            false,
+            List.of()
+        );
+    }
+
     DataNodeRequest(StreamInput in) throws IOException {
         this(in, null);
     }

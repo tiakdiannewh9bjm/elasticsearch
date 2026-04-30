@@ -1281,10 +1281,7 @@ public class ComputeService {
         long startTime = planTimeProfile == null ? 0 : System.nanoTime();
         PhysicalPlan source = new ExchangeSourceExec(originalPlan.source(), originalPlan.output(), originalPlan.isIntermediateAgg());
         // Just send out everything through a single exchange as a fallback
-        ReductionPlan passThroughReduction = new ReductionPlan(
-            originalPlan.replaceChild(source),
-            originalPlan
-        );
+        ReductionPlan passThroughReduction = new ReductionPlan(originalPlan.replaceChild(source), originalPlan);
         if (remoteFetchLateMaterialization == false && reduceNodeLateMaterialization == false && runNodeLevelReduction == false) {
             return passThroughReduction;
         }
